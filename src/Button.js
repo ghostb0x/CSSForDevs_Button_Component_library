@@ -4,40 +4,40 @@ import styled from "styled-components";
 import { COLORS } from "./constants";
 
 const Button = ({ variant, size, children }) => {
-  
   let colors;
   switch (variant) {
     case "fill": {
       colors = {
-        defaultButtonColor: COLORS.primary,
-        hoverButtonColor: COLORS.primaryLight,
-        defaultFontColor: COLORS.white,
-        hoverFontColor: COLORS.white,
-        borderStyle: `none`,
-        focusOutlineColor: COLORS.primary,
+        "--defaultButtonColor": COLORS.primary,
+        "--hoverButtonColor": COLORS.primaryLight,
+        "--defaultFontColor": COLORS.white,
+        "--hoverFontColor": COLORS.white,
+        "--borderStyle": `transparent 2px solid`,
+        "--focusOutlineColor": COLORS.primary,
       };
       break;
     }
     case "outline": {
       colors = {
-        defaultButtonColor: COLORS.white,
-        hoverButtonColor: COLORS.offwhite,
-        defaultFontColor: COLORS.primary,
-        hoverFontColor: COLORS.primary,
-        borderStyle: `${COLORS.primary} 2px solid`,
-        focusOutlineColor: COLORS.primary,
+        "--defaultButtonColor": COLORS.white,
+        "--hoverButtonColor": COLORS.offwhite,
+        "--defaultFontColor": COLORS.primary,
+        "--hoverFontColor": COLORS.primary,
+        "--borderStyle": `${COLORS.primary} 2px solid`,
+        "--focusOutlineColor": COLORS.primary,
       };
       break;
     }
     case "ghost": {
       colors = {
-        defaultButtonColor: "transparent",
-        hoverButtonColor: COLORS.transparentGray15,
-        defaultFontColor: COLORS.gray,
-        hoverFontColor: COLORS.black,
-        borderStyle: `none`,
-        focusOutlineColor: COLORS.transparentGray75,
+        "--defaultButtonColor": "transparent",
+        "--hoverButtonColor": COLORS.transparentGray15,
+        "--defaultFontColor": COLORS.gray,
+        "--hoverFontColor": COLORS.black,
+        "--borderStyle": `transparent 2px solid`,
+        "--focusOutlineColor": COLORS.transparentGray75,
       };
+      break;
     }
     default: {
       console.log("no variant provided");
@@ -51,8 +51,7 @@ const Button = ({ variant, size, children }) => {
       sizes = {
         "--height": "35px",
         "--border-radius": "2px",
-        "--font-size": "16px",
-        "--font-family": "Roboto",
+        "--font-size": "1rem",
         "--padding": "8px 16px",
       };
       break;
@@ -61,8 +60,7 @@ const Button = ({ variant, size, children }) => {
       sizes = {
         "--height": "53px",
         "--border-radius": "2px",
-        "--font-size": "18px",
-        "--font-family": "Roboto",
+        "--font-size": "1.25rem",
         "--padding": "16px 24px",
       };
       break;
@@ -71,8 +69,7 @@ const Button = ({ variant, size, children }) => {
       sizes = {
         "--height": "65px",
         "--border-radius": "4px",
-        "--font-size": "21px",
-        "--font-family": "Roboto",
+        "--font-size": `${21 / 16}rem`,
         "--padding": "20px 36px",
       };
       break;
@@ -82,36 +79,35 @@ const Button = ({ variant, size, children }) => {
     }
   }
 
-  return (
-    <StyledButton colors={colors} style={sizes}>
-      {children}
-    </StyledButton>
-  );
+  const styleVars = { ...colors, ...sizes };
+
+  return <StyledButton style={styleVars}>{children}</StyledButton>;
 };
 
 export default Button;
 
 const StyledButton = styled.button`
+  text-transform: uppercase;
+  line-height: 0;
+  font-family: "Roboto", sans-serif;
+
   height: var(--height);
   border-radius: var(--border-radius);
   font-size: var(--font-size);
-  font-family: var(--font-family);
   padding: var(--padding);
-  text-transform: uppercase;
-  line-height: 0;
 
-  background-color: ${(props) => props.colors.defaultButtonColor};
-  color: ${(props) => props.colors.defaultFontColor};
-  border: ${(props) => props.colors.borderStyle};
+  background-color: var(--defaultButtonColor);
+  color: var(--defaultFontColor);
+  border: var(--borderStyle);
 
   &:hover {
-    background-color: ${(props) => props.colors.hoverButtonColor};
-    color: ${(props) => props.colors.hoverFontColor};
+    background-color: var(--hoverButtonColor);
+    color: var(--hoverFontColor);
   }
 
   &:focus {
     outline: 2px solid;
-    outline-color: ${(props) => props.colors.focusOutlineColor};
+    outline-color: var(--focusOutlineColor);
     outline-offset: 3px;
   }
 `;
