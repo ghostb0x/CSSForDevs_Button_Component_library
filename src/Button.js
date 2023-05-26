@@ -4,44 +4,45 @@ import styled from "styled-components";
 import { COLORS } from "./constants";
 
 const Button = ({ variant, size, children }) => {
-  let defaultButtonColor;
-  let hoverButtonColor;
-  let defaultFontColor;
-  let hoverFontColor;
-  let borderStyle;
-  let focusOutlineColor;
-
-  if (variant === "fill") {
-    defaultButtonColor = COLORS.primary;
-    hoverButtonColor = COLORS.primaryLight;
-    defaultFontColor = COLORS.white;
-    hoverFontColor = COLORS.white;
-    borderStyle = `none`;
-    focusOutlineColor = COLORS.primary;
-  } else if (variant === "outline") {
-    defaultButtonColor = COLORS.white;
-    hoverButtonColor = COLORS.offwhite;
-    defaultFontColor = COLORS.primary;
-    hoverFontColor = COLORS.primary;
-    borderStyle = `${COLORS.primary} 2px solid`;
-    focusOutlineColor = COLORS.primary;
-  } else if (variant === "ghost") {
-    defaultButtonColor = "transparent";
-    hoverButtonColor = COLORS.transparentGray15;
-    defaultFontColor = COLORS.gray;
-    hoverFontColor = COLORS.black;
-    borderStyle = `none`;
-    focusOutlineColor = COLORS.transparentGray75;
+  
+  let colors;
+  switch (variant) {
+    case "fill": {
+      colors = {
+        defaultButtonColor: COLORS.primary,
+        hoverButtonColor: COLORS.primaryLight,
+        defaultFontColor: COLORS.white,
+        hoverFontColor: COLORS.white,
+        borderStyle: `none`,
+        focusOutlineColor: COLORS.primary,
+      };
+      break;
+    }
+    case "outline": {
+      colors = {
+        defaultButtonColor: COLORS.white,
+        hoverButtonColor: COLORS.offwhite,
+        defaultFontColor: COLORS.primary,
+        hoverFontColor: COLORS.primary,
+        borderStyle: `${COLORS.primary} 2px solid`,
+        focusOutlineColor: COLORS.primary,
+      };
+      break;
+    }
+    case "ghost": {
+      colors = {
+        defaultButtonColor: "transparent",
+        hoverButtonColor: COLORS.transparentGray15,
+        defaultFontColor: COLORS.gray,
+        hoverFontColor: COLORS.black,
+        borderStyle: `none`,
+        focusOutlineColor: COLORS.transparentGray75,
+      };
+    }
+    default: {
+      console.log("no variant provided");
+    }
   }
-
-  const colorGroup = {
-    defaultButtonColor: defaultButtonColor,
-    hoverButtonColor: hoverButtonColor,
-    defaultFontColor: defaultFontColor,
-    hoverFontColor: hoverFontColor,
-    borderStyle: borderStyle,
-    focusOutlineColor: focusOutlineColor
-  };
 
   let sizes;
 
@@ -52,7 +53,7 @@ const Button = ({ variant, size, children }) => {
         "--border-radius": "2px",
         "--font-size": "16px",
         "--font-family": "Roboto",
-        "--padding": "8px 16px"
+        "--padding": "8px 16px",
       };
       break;
     }
@@ -62,7 +63,7 @@ const Button = ({ variant, size, children }) => {
         "--border-radius": "2px",
         "--font-size": "18px",
         "--font-family": "Roboto",
-        "--padding": "16px 24px"
+        "--padding": "16px 24px",
       };
       break;
     }
@@ -72,7 +73,7 @@ const Button = ({ variant, size, children }) => {
         "--border-radius": "4px",
         "--font-size": "21px",
         "--font-family": "Roboto",
-        "--padding": "20px 36px"
+        "--padding": "20px 36px",
       };
       break;
     }
@@ -82,7 +83,7 @@ const Button = ({ variant, size, children }) => {
   }
 
   return (
-    <StyledButton colors={colorGroup} style={sizes}>
+    <StyledButton colors={colors} style={sizes}>
       {children}
     </StyledButton>
   );
